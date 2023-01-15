@@ -1,7 +1,7 @@
 <template>
   <div :style="{background : 'blue'}" class="container">
-   <tr v-for="el in listesToShow" :key="el" :style= "{background: 'yellow', display:'inline-block'}">
-    <td>{{ el }}</td>
+   <tr v-for="el in listesToShow" :key="el.id" :style= "{background: 'yellow', display:'inline-block'}">
+    <td>{{ el.value }}</td>
    </tr>
    <div class="pagination">
     <button @click="previous" >-</button>
@@ -27,7 +27,7 @@ export default {
   },
   data() {
     return {
-      listesToShow: [],
+      
       elPerPage: 5,
       page :1,
       numberOfPages : 1,
@@ -35,7 +35,7 @@ export default {
     }
   },
   mounted(){
-    console.log(this.array)
+    console.log(this.array,'array')
     console.log(this.array.length)
     console.log(this.numberOfPages);
     this.getPaginatedArray()
@@ -74,6 +74,11 @@ export default {
       console.log(this.page);
     }
   },
+  computed : {
+    listesToShow(){
+      return this.array
+    }
+  }
   
 };
 </script>
