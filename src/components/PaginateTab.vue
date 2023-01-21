@@ -1,10 +1,13 @@
 <template>
   <div :style="{background : 'blue'}" class="container">
-   <tr v-for="el in listesToShow" :key="el.id" :style= "{background: 'yellow', display:'inline-block'}">
+   <tr v-for="el in listesToShow" :key="el.id" >
     <td>{{ el.value }}</td>
    </tr>
    <div class="pagination">
     <button @click="previous" >-</button>
+    <span>{{ page -1  }}</span>
+    <span class="activNumber">{{ page }}</span>
+    <span>{{ page + 1  }}</span>
       <span>page {{ page}} / {{ numberOfPages }}</span>
     <button @click="next">+</button>
     <select name="" id="elPerPage"  v-model="elPerPage" @change="changeElPerPage">
@@ -13,6 +16,7 @@
       <option value="50">50</option>
       <option value="100">100</option>
     </select>
+    {{ page   }} {{ numberOfPages }}
    </div>
   </div>
 </template>
@@ -31,6 +35,8 @@ export default {
       elPerPage: 5,
       page :1,
       numberOfPages : 1,
+      startIndex:0,
+      endIndex : 6
      
     }
   },
@@ -51,10 +57,10 @@ export default {
     getPaginatedArray(){
      console.log(this.elPerPage,"elPP", typeof this.elPerPage)
      this.numberOfPages = Math.ceil(this.array.length / this.elPerPage)
-      let startIndex = (this.page * this.elPerPage) - this.elPerPage
-      let endIndex = startIndex + this.elPerPage
-      console.log(startIndex , endIndex,'---------')
-  return  this.listesToShow = this.array.slice(startIndex, endIndex)
+      this.startIndex = (this.page * this.elPerPage) - this.elPerPage
+      this.endIndex = this.startIndex + this.elPerPage 
+      console.log(this.array.slice(this.startIndex, this.endIndex))
+  
     
       
     },
@@ -76,7 +82,7 @@ export default {
   },
   computed : {
     listesToShow(){
-      return this.array
+      return  this.array.slice(this.startIndex, this.endIndex)
     }
   }
   
@@ -87,7 +93,19 @@ export default {
 .container {
   display: flex;
   flex-direction: column;
-  width: max-content;
+  width: 500px;
+  height: 500px;
   margin: auto
+}
+.pagination {
+  width: 100%;
+  background: rgb(42, 139, 79);
+}
+.activNumber{
+  font-size: 24px;
+  background: blue;
+  border-radius: 50%;
+  width: 30px;
+  display: block;
 }
 </style>
