@@ -4,19 +4,23 @@
     <td>{{ el.value }}</td>
    </tr>
    <div class="pagination">
+    <button @click="firstPage">First Page</button>
     <button @click="previous" >-</button>
-    <span>{{ page -1  }}</span>
-    <span class="activNumber">{{ page }}</span>
-    <span>{{ page + 1  }}</span>
+    <div class="numberCtn">
+      <div class="notActivNumber" @click="goTo">{{ page === 1 ?null :page -1  }}</div>
+      <div class="activNumber">{{ page }}</div>
+      <div class="notActivNumber" @click="goTo">{{ page === numberOfPages ? null : page + 1  }}</div>
+    </div>
       <span>page {{ page}} / {{ numberOfPages }}</span>
     <button @click="next">+</button>
+    <button @click="lastPage">LastPage</button>
     <select name="" id="elPerPage"  v-model="elPerPage" @change="changeElPerPage">
       <option value= "5" >5</option>
       <option value="10">10</option>
       <option value="50">50</option>
       <option value="100">100</option>
     </select>
-    {{ page   }} {{ numberOfPages }}
+   
    </div>
   </div>
 </template>
@@ -49,6 +53,20 @@ export default {
   },
  
   methods : {
+    goTo(e){
+      console.log(e.target.textContent)
+      this.page = parseInt(e.target.textContent)
+      this.getPaginatedArray()
+    },
+    firstPage(){
+      
+      this.page = 1
+      this.getPaginatedArray()
+    },
+    lastPage() {
+      this.page = this.numberOfPages
+      this.getPaginatedArray()
+    },
     changeElPerPage() {
       this.elPerPage = parseInt(this.elPerPage)
       this.page = 1
@@ -100,12 +118,26 @@ export default {
 .pagination {
   width: 100%;
   background: rgb(42, 139, 79);
+  display: flex;
+  justify-content: center;
 }
-.activNumber{
-  font-size: 24px;
-  background: blue;
-  border-radius: 50%;
-  width: 30px;
-  display: block;
+.numberCtn{
+  flex-grow: 2;
+  border: 1px solid red;
+  text-align: center;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
+.activNumber {
+  background: rgb(44, 67, 197);
+  flex-grow: 2;
+}
+.notActivNumber {
+  flex-grow: 1;
+  font-size: 12px;
+  cursor: pointer;
+
+}
+
 </style>
