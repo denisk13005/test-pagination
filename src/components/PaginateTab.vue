@@ -1,15 +1,17 @@
 <template>
-  <div :style="{background : 'blue'}" class="container">
-   <tr v-for="el in listesToShow" :key="el.id" >
+  <div  class="container">
+   <tr v-for="(el,index) in listesToShow" :key="index" >
     <td>{{ el.value }}</td>
    </tr>
    <div class="pagination">
     <button @click="firstPage">First Page</button>
     <button @click="previous" >-</button>
     <div class="numberCtn">
+      <div class="notActivNumber" @click="goTo">{{ page === 1 || page ===2?null :page -2  }}</div>
       <div class="notActivNumber" @click="goTo">{{ page === 1 ?null :page -1  }}</div>
-      <div class="activNumber">{{ page }}</div>
+      <div class="activNumber"><span>{{ page }}</span> </div>
       <div class="notActivNumber" @click="goTo">{{ page === numberOfPages ? null : page + 1  }}</div>
+      <div class="notActivNumber" @click="goTo">{{ page === numberOfPages || page === numberOfPages -1?null :page +2  }}</div>
     </div>
       <span>page {{ page}} / {{ numberOfPages }}</span>
     <button @click="next">+</button>
@@ -108,6 +110,20 @@ export default {
 </script>
 
 <style  scoped>
+button {
+  background-color: blue;
+  color: white;
+  outline: none;
+  border: 1px solid whitesmoke;
+  border-radius: 3px ;
+  font-weight: 700;
+}
+button:hover{
+  color: blue;
+  background-color: white;
+  cursor: pointer;
+  border-color: blue;
+}
 .container {
   display: flex;
   flex-direction: column;
@@ -117,25 +133,36 @@ export default {
 }
 .pagination {
   width: 100%;
-  background: rgb(42, 139, 79);
   display: flex;
   justify-content: center;
 }
 .numberCtn{
   flex-grow: 2;
-  border: 1px solid red;
   text-align: center;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
 }
 .activNumber {
-  background: rgb(44, 67, 197);
-  flex-grow: 2;
+  position: relative;
+}
+.activNumber span{
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50% ,-50%);
+  background-color: rgb(0, 68, 255);
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  border-radius: 50%;
+  color: white;
 }
 .notActivNumber {
-  flex-grow: 1;
-  font-size: 12px;
+  font-size: 10px;
   cursor: pointer;
 
 }
