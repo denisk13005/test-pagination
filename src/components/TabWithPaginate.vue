@@ -1,34 +1,55 @@
 <template>
   <div  class="container">
-   <tr v-for="(el,index) in listesToShow" :key="index" >
-    <td>{{ el.value }}</td>
-   </tr>
+    
+
+   <TabComponent :listesToShow = "listesToShow"/>
    <div class="pagination">
-    <button @click="firstPage">First Page</button>
-    <button @click="previous" >-</button>
+    
     <div class="numberCtn">
-      <div class="notActivNumber" @click="goTo">{{ page === 1 || page ===2?null :page -2  }}</div>
-      <div class="notActivNumber" @click="goTo">{{ page === 1 ?null :page -1  }}</div>
-      <div class="activNumber"><span>{{ page }}</span> </div>
-      <div class="notActivNumber" @click="goTo">{{ page === numberOfPages ? null : page + 1  }}</div>
-      <div class="notActivNumber" @click="goTo">{{ page === numberOfPages || page === numberOfPages -1?null :page +2  }}</div>
+      <div class="leftBtns">
+
+        <button @click="firstPage">First Page</button>
+        <button @click="previous" >-</button>
+      </div>
+      <div class="numbers">
+
+        <div class="notActivNumber" @click="goTo">{{ page === 1 || page ===2?null :page -2  }}</div>
+        <div class="notActivNumber" @click="goTo">{{ page === 1 ?null :page -1  }}</div>
+        <div class="activNumber"><span>{{ page }}</span> </div>
+        <div class="notActivNumber" @click="goTo">{{ page === numberOfPages ? null : page + 1  }}</div>
+        <div class="notActivNumber" @click="goTo">{{ page === numberOfPages || page === numberOfPages -1?null :page +2  }}</div>
+      </div>
+      <div class="rightBtns">
+
+        <button @click="next">+</button>
+        <button @click="lastPage">LastPage</button>
+      </div>
     </div>
+   
+    <div class="pageChoice">
+      <div >
+
+       
+        <select name="" id="elPerPage"  v-model="elPerPage" @change="changeElPerPage">
+          <option value= "5" >5</option>
+          <option value="10">10</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+        <span>Eléments/page</span>
+      </div>
       <span>page {{ page}} / {{ numberOfPages }}</span>
-    <button @click="next">+</button>
-    <button @click="lastPage">LastPage</button>
-    <select name="" id="elPerPage"  v-model="elPerPage" @change="changeElPerPage">
-      <option value= "5" >5</option>
-      <option value="10">10</option>
-      <option value="50">50</option>
-      <option value="100">100</option>
-    </select>
+    </div>
+
    
    </div>
   </div>
 </template>
 
 <script>
+import TabComponent from './TabComponent.vue';
 export default {
+  components : {TabComponent},
   props : {
     array : {
       type : Array,
@@ -102,7 +123,9 @@ export default {
   },
   computed : {
     listesToShow(){
-      return  this.array.slice(this.startIndex, this.endIndex)
+      console.log('ici')
+      let tabArray = this.array.slice(this.startIndex, this.endIndex)
+      return  tabArray
     }
   }
   
@@ -111,40 +134,72 @@ export default {
 
 <style  scoped>
 button {
-  background-color: blue;
+  background-color: #011a5c;
   color: white;
   outline: none;
-  border: 1px solid whitesmoke;
+  border: 1px solid white;
   border-radius: 3px ;
-  font-weight: 700;
+  width: 6vw;
+  height: 4vh;
+  font-size: 16px;
+  
 }
 button:hover{
-  color: blue;
+  color: #011a5c;
   background-color: white;
   cursor: pointer;
-  border-color: blue;
+  border-color: #011a5c;
+}
+.leftBtns button{
+  margin-right: 10px;
+ 
+}
+
+.rightBtns button{
+  margin-left: 10px;
 }
 .container {
   display: flex;
   flex-direction: column;
-  width: 500px;
-  height: 500px;
-  margin: auto
+  width: 100%;
+  height: max-content;
+  margin: auto;
+  border: 1px solid #011a5c;
+  
 }
 .pagination {
-  width: 100%;
+  width: 50%;
+  height: 10vh;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: auto;
+  color: #011a5c;
+  border: 1px solid #011a5c;
+
+  
 }
 .numberCtn{
-  flex-grow: 2;
   text-align: center;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
+  width :100%;
+  margin: auto;
+  height: calc(4vh + 2px);
+
+}
+.numbers {
+  width:20%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 .activNumber {
   position: relative;
+
 }
 .activNumber span{
   position: absolute;
@@ -154,17 +209,32 @@ button:hover{
   top: 50%;
   left: 50%;
   transform: translate(-50% ,-50%);
-  background-color: rgb(0, 68, 255);
+  background-color: rgb(255, 255, 255);
   width: 30px;
   height: 30px;
   text-align: center;
   border-radius: 50%;
-  color: white;
+  color: #011a5c;
+  font-size: 18px;
 }
 .notActivNumber {
   font-size: 10px;
   cursor: pointer;
+  margin-left: 40px;
+  margin-right: 40px;
+  
 
+}
+.pageChoice {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+}
+#elPerPage{
+  margin-right: 15px;  
+  background-color: white;
+  color: #011a5c;
+  border: 1px solid #011a5c;
 }
 
 </style>

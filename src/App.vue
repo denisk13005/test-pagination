@@ -1,34 +1,18 @@
 <template>
   <div id="app">
-    choosen option :{{chooseOption}} <br/>
-    id:{{ optionId }}
-   <PaginateTab :array="listToShow"/>
-   <!-- <EditableSelect :options="list" @choosenOption="choosenOption"/> -->
-    <!-- <select name="" id="test" v-model="test" @change="inputFilterList">
-      <option value="test">test</option>
-      <option value="test2">test2</option>
-      <option value="test3">test3</option>
-    </select> -->
-    <!-- <select name="" id="test2" v-model="test2" @change="inputFilterList">
-      <option value="tests">tests</option>
-      <option value="tests2">tests2</option>
-      <option value="tests3">tests3</option>
-    </select>
-    {{ test }}
-    {{ test2 }}
-
-    <div v-for="(el,index) in arrayToShow" :key="index">
-    <p>{{ el.name }}</p></div> -->
+   
+   <tab-with-paginate :array="listToShow" @update="updateArray"/>
+  
   </div>
 </template>
 
 <script>
-import PaginateTab from './components/PaginateTab.vue';
+import TabWithPaginate from './components/TabWithPaginate.vue';
 // import EditableSelect from './components/EditableSelect.vue';
 export default {
   name: "App",
   components : {
-    PaginateTab,
+    TabWithPaginate,
     // EditableSelect
   },
   data() {
@@ -72,6 +56,11 @@ export default {
     this.arrayToShow = Array.from(this.array)
   },
   methods : {
+    updateArray(payload){
+      console.log(payload, 'in  app')
+      this.list = payload
+      console.log(this.listToShow,' list to show in app')
+    },
     choosenOption (payload){
       this.chooseOption = payload.value
       this.optionId = payload.id
