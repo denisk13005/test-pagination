@@ -5,7 +5,7 @@
     type="text" 
     placeholder="choose an option" 
     v-model="optionValue" 
-    @keyup="filterOptions"
+    @keyup="filterOptions"    
     @click="edit"/>
     <div v-show="showOptions" class="optionsContainer">
       <div class="option" v-for="(el,index) in getOptions" :key="index" @click="chooseOption(el)" > {{ el.value }}, {{ el.id }} </div>
