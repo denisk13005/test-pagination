@@ -57,11 +57,13 @@ export default {
       ],
       arrayToShow: [],
       filterList: [],
+      filterArray: [],
     };
   },
   mounted() {
     this.arrayToShow = Array.from(this.array);
-    console.log(this.filterArticles(this.array, this.filter));
+    this.filterArticles(this.array, this.filter);
+    console.log(this.filterArray, "filter array");
   },
   methods: {
     filterArticles(array, filter) {
@@ -71,7 +73,7 @@ export default {
         array.forEach((element) => {
           keys.forEach((key) => {
             if (element[key] === el[key]) {
-              console.log(element, "element");
+              this.filterArray.push(element);
             }
           });
         });
