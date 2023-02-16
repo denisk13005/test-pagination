@@ -1,24 +1,31 @@
 <template>
   <div id="app">
-    <tab-with-paginate :array="listToShow" @update="updateArray" />
-    <EditableSelect :options="list" />
+    <!-- <tab-with-paginate :array="listToShow" @update="updateArray" />
+    <EditableSelect :options="list" /> -->
     <EditableDropbox />
+    <multiselect v-model="value" :options="options" @click="cli"
+      >test</multiselect
+    >
   </div>
 </template>
 
 <script>
-import TabWithPaginate from "./components/TabWithPaginate.vue";
-import EditableSelect from "./components/EditableSelect.vue";
+// import TabWithPaginate from "./components/TabWithPaginate.vue";
+// import EditableSelect from "./components/EditableSelect.vue";
 import EditableDropbox from "./components/EditableDropbox.vue";
+import Multiselect from "vue-multiselect";
 export default {
   name: "App",
   components: {
-    TabWithPaginate,
-    EditableSelect,
+    // TabWithPaginate,
+    // EditableSelect,
     EditableDropbox,
+    Multiselect,
   },
   data() {
     return {
+      value: null,
+      options: ["list", "of", "options"],
       list: [
         { value: "r", id: 0 },
         { value: "france", id: 1 },
@@ -66,6 +73,9 @@ export default {
     console.log(this.filterArray, "filter array");
   },
   methods: {
+    cli(e) {
+      console.log(e.target);
+    },
     filterArticles(array, filter) {
       let keys = Object.keys(array[0]);
       console.log(keys);
