@@ -2,10 +2,8 @@
   <div id="app">
     <!-- <tab-with-paginate :array="listToShow" @update="updateArray" />
     <EditableSelect :options="list" /> -->
+    <VueModal />
     <EditableDropbox />
-    <multiselect v-model="value" :options="options" @click="cli"
-      >test</multiselect
-    >
   </div>
 </template>
 
@@ -13,14 +11,14 @@
 // import TabWithPaginate from "./components/TabWithPaginate.vue";
 // import EditableSelect from "./components/EditableSelect.vue";
 import EditableDropbox from "./components/EditableDropbox.vue";
-import Multiselect from "vue-multiselect";
+import VueModal from "./components/VueModal.vue";
 export default {
   name: "App",
   components: {
     // TabWithPaginate,
     // EditableSelect,
     EditableDropbox,
-    Multiselect,
+    VueModal,
   },
   data() {
     return {
@@ -129,3 +127,4 @@ export default {
   },
 };
 </script>
+<style></style>
